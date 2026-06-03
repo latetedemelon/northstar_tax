@@ -117,8 +117,8 @@ Mirrors Northstar's release cadence; full detail in [`roadmap.md`](roadmap.md).
 
 | Release | What it adds |
 |---|---|
-| **t0.0 Design** (now) | These documents. No code. |
-| **t0.1 Engine core** | Federal T1 + one province (ON), T4-only, BPA + core credits; golden-case tests vs. CRA examples. |
+| **t0.0 Design** | These documents. No code. |
+| **t0.1 Engine core** (now) | Federal T1 + Ontario, 2025, T4-only, BPA + core credits, CPP base/enhanced split, surtax + health premium; CLI + one-page web demo; golden-case tests verified vs. Form ON428. |
 | **t0.2 Slips & credits** | T5/T3/T4A income, RRSP/FHSA, medical, donations, tuition; the interview. |
 | **t0.3 Couples & optimization** | Spousal credit transfers, pension splitting, donation pooling. |
 | **t0.4 Investments & self-employment** | Capital gains/ACB, T5008, T2125, T776, CCA. |

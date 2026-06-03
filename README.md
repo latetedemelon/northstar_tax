@@ -17,11 +17,32 @@ yourself through CRA My Account, by exporting to a certified filer, or on paper.
 See [`docs/limitations.md`](docs/limitations.md) for why that boundary is a
 feature, not a gap.
 
-**Status:** `t0.0` — design only. This repository currently contains the
-architecture and scope documents; no calculation code has been written yet. The
-implementation roadmap is in [`docs/roadmap.md`](docs/roadmap.md).
+**Status:** `t0.1` — the first runnable slice. A pure-function T1 engine computes a
+complete **federal + Ontario, 2025, T4-only** return (CPP base/enhanced split, the
+14.5% federal credit rate, BPA taper, Ontario surtax and health premium), with
+golden-case tests verified to the cent against Form ON428. Two demo surfaces: a
+`northstar-tax` CLI and a one-page web form. The phased roadmap to full coverage
+is in [`docs/roadmap.md`](docs/roadmap.md).
 
 **License:** AGPL-3.0-only, matching Northstar.
+
+## Run the demo
+
+```bash
+uv sync --all-extras
+
+# CLI: print a computed return
+uv run northstar-tax assess --box14 70000 --box16 3956.75 --box18 1077.48 \
+  --box22 12000 --rrsp 5000
+
+# Web: a one-page T4 form -> computed return
+uv run northstar-tax serve            # then open http://127.0.0.1:8000
+
+# Quality gates
+uv run ruff check . && uv run mypy
+uv run python scripts/validate_constants.py
+uv run pytest
+```
 
 ---
 

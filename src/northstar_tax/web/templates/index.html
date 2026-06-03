@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>Enter a single Ontario <strong>T4</strong> for the 2025 tax year. We compute a
+  complete federal + Ontario return and show your refund or balance owing.</p>
+
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+
+  <form method="post" action="/assess">
+    <label>Box 14 — employment income
+      <input name="box14" type="number" step="0.01" value="70000" required />
+    </label>
+    <label>Box 16 — CPP contributions
+      <input name="box16" type="number" step="0.01" value="4034.10" />
+    </label>
+    <label>Box 18 — EI premiums
+      <input name="box18" type="number" step="0.01" value="1077.48" />
+    </label>
+    <label>Box 22 — income tax deducted
+      <input name="box22" type="number" step="0.01" value="12000" />
+    </label>
+    <label>RRSP deduction (line 20800)
+      <input name="rrsp" type="number" step="0.01" value="0" />
+    </label>
+    <button type="submit">Compute my return</button>
+  </form>
+{% endblock %}

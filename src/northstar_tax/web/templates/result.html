@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>{{ a.province }} T1, tax year {{ a.tax_year }}
+     <small>(constants {{ a.constants_vintage }})</small></p>
+
+  <table>
+    <thead><tr><th>Line</th><th>Description</th><th class="amt">Amount</th></tr></thead>
+    <tbody>
+      {% for ln in a.lines %}
+        <tr><td>{{ ln.line }}</td><td>{{ ln.label }}<br />
+          <small style="color:#777">{{ ln.explain }}</small></td>
+          <td class="amt">${{ ln.amount }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="bottom {{ 'refund' if is_refund else 'owing' }}">{{ bottom }}</p>
+
+  {% if a.diagnostics %}
+    <div class="note">
+      <strong>Notes to review:</strong>
+      <ul>{% for d in a.diagnostics %}<li>[{{ d.severity }}] {{ d.message }}</li>{% endfor %}</ul>
+    </div>
+  {% endif %}
+
+  <p>This return is prepared for your review. <strong>File it yourself</strong> through
+  CRA My Account or on paper — {{ brand.name }} never transmits anything.</p>
+  <p><a href="/">← Start over</a></p>
+{% endblock %}

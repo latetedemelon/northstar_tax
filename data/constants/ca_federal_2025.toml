@@ -1,0 +1,57 @@
+# Federal personal income-tax constants — tax year 2025.
+#
+# Vintage: 2025-cra-v1. Every value is traced to a primary CRA / Finance source.
+# Refuse to compute a year without a vetted file here (no guessing) — see
+# docs/data-and-vintage.md.
+#
+# NOTE ON THE 2025 LOWEST RATE: a mid-year cut took the lowest federal bracket
+# from 15% to 14% effective 1 July 2025, giving a blended *effective* rate of
+# 14.5% for the 2025 tax year. Non-refundable credits are therefore valued at
+# 14.5% in 2025 (CRA, "Federal income tax and benefit information for 2025",
+# 5000-G). This is exactly the kind of year-specific value the constants layer
+# exists to hold.
+
+jurisdiction = "ca_federal"
+tax_year = 2025
+vintage = "2025-cra-v1"
+
+# Lowest-bracket / non-refundable credit rate for 2025 (see note above).
+credit_rate = 0.145
+
+# Progressive brackets: [lower_bound, rate]. Source: CRA tax rates 2025.
+brackets = [
+    [0,      0.145],
+    [57375,  0.205],
+    [114750, 0.26],
+    [177882, 0.29],
+    [253414, 0.33],
+]
+
+# Canada Employment Amount (line 31260), max claim. Source: CRA line 31260, 2025.
+canada_employment_amount = 1471
+
+# Basic Personal Amount with the high-income taper (Schedule 1 worksheet).
+# Enhanced 16,129 down to base 14,538, phased linearly across net income from the
+# bottom of the 29% bracket to the bottom of the 33% bracket. Source: CRA 2025.
+[bpa]
+maximum = 16129
+minimum = 14538
+taper_start = 177882   # net income where the taper begins
+taper_end = 253414     # net income where BPA reaches the minimum
+
+# CPP (Schedule 8). Employee base contributions are a credit (30800); the
+# enhanced (first additional) portion plus CPP2 are a deduction (22215).
+# Source: CRA "CPP contribution rates, maximums and exemptions", 2025.
+[cpp]
+basic_exemption = 3500
+ympe = 71300            # year's maximum pensionable earnings
+yampe = 81200           # year's additional maximum pensionable earnings (CPP2)
+base_rate = 0.0495      # employee base portion -> non-refundable credit
+enhanced_rate = 0.0100  # first-additional portion -> deduction (22215)
+cpp2_rate = 0.04        # on YMPE..YAMPE -> deduction (22215)
+
+# EI premiums (line 31200, credit). Source: CRA EI premium rates, 2025.
+[ei]
+rate = 0.0164
+max_insurable = 65700
+max_premium = 1077.48

@@ -1,0 +1,49 @@
+# Ontario personal income-tax constants — tax year 2025 (Form ON428).
+#
+# Vintage: 2025-cra-v1. Brackets and the basic personal amount are indexed 2.8%
+# for 2025. Sources: CRA "Ontario tax information for 2025" (5006-PC) / ON428,
+# taxtips.ca Ontario rate tables, EY 2025 Ontario rates.
+
+jurisdiction = "ca_on"
+tax_year = 2025
+vintage = "2025-cra-v1"
+
+# Ontario values non-refundable credits at its lowest rate, 5.05%.
+credit_rate = 0.0505
+
+# Progressive brackets: [lower_bound, rate]. Source: ON428 2025.
+brackets = [
+    [0,      0.0505],
+    [52886,  0.0915],
+    [105775, 0.1116],
+    [150000, 0.1216],
+    [220000, 0.1316],
+]
+
+# Ontario Basic Personal Amount, 2025. Ontario has no high-income taper.
+[bpa]
+amount = 12747
+
+# Ontario surtax (ON428): 20% of Ontario tax (after non-refundable credits) over
+# tier1, plus an additional 36% over tier2. Computed before the health premium.
+# Source: taxtips.ca / EY 2025: 20% over $5,710, +36% over $7,307.
+[surtax]
+tier1_threshold = 5710
+tier1_rate = 0.20
+tier2_threshold = 7307
+tier2_rate = 0.36
+
+# Ontario Health Premium (ON428), by taxable income. Standard schedule (not
+# indexed), expressed as piecewise base + min(cap, rate*(TI - floor)).
+# Source: ontario.ca/page/health-premium ; taxtips.ca Ontario Health Premium.
+# Each band: lower bound, base amount, marginal rate, and cap on the marginal add.
+[health_premium]
+bands = [
+    [0,      0,   0.0,  0],
+    [20000,  0,   0.06, 300],
+    [36000,  300, 0.06, 150],
+    [48000,  450, 0.25, 150],
+    [72000,  600, 0.25, 150],
+    [200000, 750, 0.25, 150],
+]
+maximum = 900

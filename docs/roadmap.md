@@ -16,7 +16,7 @@ The documents in this repo. No code.
 **Done when:** scope, architecture, feature map, and boundaries are reviewed and
 agreed. ✅ (this PR)
 
-## t0.1 — Engine core
+## t0.1 — Engine core ✅ (shipped)
 
 The thinnest end-to-end T1 that produces a correct number.
 
@@ -29,6 +29,14 @@ The thinnest end-to-end T1 that produces a correct number.
 
 **Done when:** a single-T4 Ontario return reproduces every line of a set of
 hand-verified / CRA-example golden cases to the prescribed rounding.
+
+*Delivered:* `src/northstar_tax/` (pure `assess()` engine, vintage-tagged TOML
+constants + validator, `TaxReturnTarget` with the tested no-transmitter
+invariant), a `northstar-tax` CLI and a one-page FastAPI demo, and a green
+suite of 33 tests including four ON 2025 golden returns verified to the cent.
+One deliberate MVP simplification: the package is **self-contained** (it mirrors
+Northstar's conventions rather than importing it); wiring the `northstar`
+library dependency is a follow-up.
 
 ## t0.2 — Slips & credits
 

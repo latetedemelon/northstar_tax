@@ -1,0 +1,94 @@
+[project]
+name = "northstar-tax"
+version = "0.1.0.dev0"
+description = "Prepare a complete Canadian personal income-tax return. File it yourself."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "AGPL-3.0-only" }
+authors = [{ name = "Rob", email = "rob@example.invalid" }]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "jinja2>=3.1",
+    "python-multipart>=0.0.12",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "pytest-cov>=6.0",
+    "hypothesis>=6.118",
+    "httpx>=0.28",
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "pre-commit>=4.0",
+]
+
+[project.scripts]
+northstar-tax = "northstar_tax.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/northstar_tax"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "T20", "SIM", "RUF"]
+ignore = [
+    "E501",            # line length handled by formatter
+    "RUF002",          # allow × and − in docstrings (tax formulas read better)
+    "RUF003",          # allow the same in comments
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["T20"]      # print() allowed in tests
+"scripts/**/*.py" = ["T20"]    # CLI scripts print to stdout
+"src/northstar_tax/cli.py" = ["T20"]  # the CLI prints the assessment
+# Error-taxonomy names are part of the documented public API (docs/architecture.md).
+"src/northstar_tax/errors.py" = ["N818"]
+"src/northstar_tax/constants/__init__.py" = ["N818"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.Query",
+    "fastapi.Form",
+]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src/northstar_tax"]
+plugins = ["pydantic.mypy"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers --cov=northstar_tax --cov-report=term-missing"
+testpaths = ["tests"]
+markers = [
+    "unit: fast unit tests (default)",
+    "functional: functional tests (golden cases, conformance, web)",
+]
+
+[tool.coverage.run]
+source = ["src/northstar_tax"]
+branch = true
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if TYPE_CHECKING:",
+]
